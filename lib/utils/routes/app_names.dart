@@ -3,6 +3,8 @@ enum AppNames {
 
   //home screens
   homeScreen('/home_screen'),
+  acceptScreen('/accept_screen'),
+
   addJobsScreen('/add_jobs_screen');
 
   final String route;

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
 import 'package:priority_assist/views/screens/add_job_screen.dart';
 import 'package:priority_assist/views/screens/home_screen.dart';
+import 'package:priority_assist/views/screens/job_accept_screen.dart';
 import 'package:priority_assist/views/screens/splash_screen.dart';
 
 // Route path constants
@@ -36,13 +37,13 @@ final GoRouter router = GoRouter(
         return const AddJobScreen();
       },
     ),
-    // GoRoute(
-    //   path: AppNames.emailLogin.route,
-    //   name: 'emailLogin',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const EmailLoginScreen();
-    //   },
-    // ),
+    GoRoute(
+      path: AppNames.acceptScreen.route,
+      name: 'emailLogin',
+      builder: (BuildContext context, GoRouterState state) {
+        return const JobAcceptScreen();
+      },
+    ),
     // GoRoute(
     //   path: AppNames.emailOtpScreen.route,
     //   name: 'emailOtp',

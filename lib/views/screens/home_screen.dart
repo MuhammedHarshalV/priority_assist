@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:priority_assist/controllers/home/home_controller.dart';
 import 'package:priority_assist/themes/app_colors.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
 
@@ -11,6 +14,9 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.sizeOf(context).height;
+    final homeState = ref.watch(homeProvider);
+    bool log2 = homeState.isDatabaseEmpty;
+    log(log2.toString());
     return SafeArea(
       child: Scaffold(
         body: Padding(

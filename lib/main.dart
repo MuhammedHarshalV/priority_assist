@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:priority_assist/themes/app_themes.dart';
 import 'package:priority_assist/utils/routes/app_routes.dart';
+import 'package:priority_assist/services/notification_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize notifications
+ await NotificationService.initialize();
+
+  // Natively assigns the app's secure writable document folder path!
+  await Hive.initFlutter();
 
   runApp(const ProviderScope(child: MyApp()));
 }
