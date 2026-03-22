@@ -1,23 +1,23 @@
 class HomeState {
   final bool isDatabaseEmpty;
   final bool isLoading;
-  final List<Map<String, dynamic>> jobRequests;
+  final List<Map<String, dynamic>> progressJob;
 
   const HomeState({
-    this.isDatabaseEmpty = false, 
+    this.isDatabaseEmpty = false,
     this.isLoading = false,
-    this.jobRequests = const [],
+    this.progressJob = const [],
   });
 
   HomeState copyWith({
-    bool? isDatabaseEmpty, 
+    bool? isDatabaseEmpty,
     bool? isLoading,
-    List<Map<String, dynamic>>? jobRequests,
+    List<Map<String, dynamic>>? progressJob,
   }) {
     return HomeState(
       isDatabaseEmpty: isDatabaseEmpty ?? this.isDatabaseEmpty,
       isLoading: isLoading ?? this.isLoading,
-      jobRequests: jobRequests ?? this.jobRequests,
+      progressJob: progressJob ?? this.progressJob,
     );
   }
 }

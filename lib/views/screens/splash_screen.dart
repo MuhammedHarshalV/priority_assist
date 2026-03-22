@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:priority_assist/controllers/splash/splash_controller.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
 
-
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
 
@@ -24,6 +23,7 @@ class SplashScreen extends ConsumerWidget {
     });
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

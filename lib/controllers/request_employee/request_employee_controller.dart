@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:priority_assist/controllers/request_employee/request_employee_state.dart';
 
 class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
-  // ─── Text Controllers ─────────────────────────────────────────
   final TextEditingController nameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController serviceTypeController = TextEditingController();
@@ -26,7 +25,7 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
     });
   }
 
-  // ─── Open Box ─────────────────────────────────────────────────
+  //  Open Box 
   Future<Box> _openBox() async {
     if (Hive.isBoxOpen('request_employee')) {
       return Hive.box('request_employee');
@@ -34,17 +33,17 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
     return await Hive.openBox('request_employee');
   }
 
-  // ─── Set Date ─────────────────────────────────────────────────
+  //  Set Date 
   void setDate(DateTime date) {
     state = state.copyWith(date: date);
   }
 
-  // ─── Set Time ─────────────────────────────────────────────────
+  //  Set Time 
   void setTime(TimeOfDay time) {
     state = state.copyWith(time: time);
   }
 
-  // ─── Save ─────────────────────────────────────────────────────
+  //  Save ─
   Future<bool> saveToHive({
     required String name,
     required String address,
@@ -61,8 +60,8 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
         'address': address,
         'serviceType': serviceType,
         'priority': priority,
-        'date': date.toIso8601String(),       // ← store as String
-        'time': '${time.hour}:${time.minute}', // ← store as String
+        'date': date.toIso8601String(), 
+        'time': '${time.hour}:${time.minute}', 
       };
 
       await box.add(requestData);
@@ -74,7 +73,7 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
     }
   }
 
-  // ─── Clear Form ───────────────────────────────────────────────
+  //  Clear Form ──
   void clearForm() {
     nameController.clear();
     addressController.clear();
@@ -83,7 +82,7 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
     state = const RequestEmployeeState();
   }
 
-  // ─── Dispose ──────────────────────────────────────────────────
+  //  Dispose ─
   @override
   void dispose() {
     nameController.dispose();
@@ -94,7 +93,7 @@ class RequestEmployeeNotifier extends StateNotifier<RequestEmployeeState> {
   }
 }
 
-// ─── Provider ─────────────────────────────────────────────────
+//  Provider 
 final requestEmployeeProvider =
     StateNotifierProvider<RequestEmployeeNotifier, RequestEmployeeState>((ref) {
       return RequestEmployeeNotifier();

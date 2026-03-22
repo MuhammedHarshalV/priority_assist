@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:priority_assist/models/job_request_model.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
 import 'package:priority_assist/views/screens/add_job_screen.dart';
+import 'package:priority_assist/views/screens/go_to_que_screen.dart';
 import 'package:priority_assist/views/screens/home_screen.dart';
 import 'package:priority_assist/views/screens/job_accept_screen.dart';
+import 'package:priority_assist/views/screens/jobs_history_screen.dart';
+import 'package:priority_assist/views/screens/queue_list_screen.dart';
 import 'package:priority_assist/views/screens/splash_screen.dart';
 
 // Route path constants
@@ -39,168 +43,34 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppNames.acceptScreen.route,
-      name: 'emailLogin',
+      name: 'acceptScreen',
       builder: (BuildContext context, GoRouterState state) {
-        return const JobAcceptScreen();
+        final job = state.extra as JobRequestModel;
+        return JobAcceptScreen(jobRequestModel: job);
       },
     ),
-    // GoRoute(
-    //   path: AppNames.emailOtpScreen.route,
-    //   name: 'emailOtp',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const EmailOtpScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: AppNames.phoneOtpScreen.route,
-    //   name: 'phoneOtp',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     // Get phone number from extra or query parameters
-    //     final phoneNumber =
-    //         state.extra as int? ??
-    //         int.tryParse(state.uri.queryParameters['phone'] ?? '0') ??
-    //         0;
-    //     return PhoneOtpScreen(phonenumber: phoneNumber);
-    //   },
-    // ),
-
-    // // Main Navigation
-    // GoRoute(
-    //   path: AppNames.navScreen.route,
-    //   name: 'nav',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return BottomNavScreen();
-    //   },
-    // ),
-
-    // // Home Routes
-    // GoRoute(
-    //   path: AppNames.homeScreen.route,
-    //   name: 'home',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const HomeScreen();
-    //   },
-    // ),
-
-    // //   // Profile Routes
-    // GoRoute(
-    //   path: AppNames.profileScreen.route,
-    //   name: 'profile',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const CommonProfileScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: AppNames.editProfileScreen.route,
-    //   name: 'editProfile',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const EditProfileScreen();
-    //   },
-    // ),
-
-    // //   // Events Routes
-    // //   GoRoute(
-    // //     path: AppNames.yourEventsScreen.route,
-    // //     name: 'yourEvents',
-    // //     builder: (BuildContext context, GoRouterState state) {
-    // //       return const YourEventsScreen();
-    // //     },
-    // //   ),
-    // //   GoRoute(
-    // //     path: AppNames.eventsDetailsScreen.route,
-    // //     name: 'eventsDetails',
-    // //     builder: (BuildContext context, GoRouterState state) {
-    // //       return const EventsDetailsScreen();
-    // //     },
-    // //   ),
-    // GoRoute(
-    //   path: AppNames.createEventScreen.route,
-    //   name: 'createEvent',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const CreateEventScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: AppNames.calenderDetailsScreen.route,
-    //   name: 'calendarDetails',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const CalendarDetailsScreen();
-    //   },
-    // ),
-
-    // // Discovery Routes
-    // GoRoute(
-    //   path: AppNames.discoverScreen.route,
-    //   name: 'discover',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const DiscoverScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: AppNames.discoverDetailsScreen.route,
-    //   name: 'discoverDetails',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     // Get title from extra or query parameters
-    //     final title =
-    //         state.extra as String? ??
-    //         state.uri.queryParameters['title'] ??
-    //         'Default Title';
-    //     return DiscoveryCategoryDetailedScreen(titleText: title);
-    //   },
-    // ),
-
-    // //   // Settings Routes
-    // GoRoute(
-    //   path: AppNames.settingsScreen.route,
-    //   name: 'settings',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const SettingsScreen();
-    //   },
-    // ),
-    // GoRoute(
-    //   path: AppNames.accountSettingsScreen.route,
-    //   name: 'accountSettings',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const AccountSettingsScreen();
-    //   },
-    // ),
-    // //   GoRoute(
-    // //     path: AppNames.updateUsernameScreen.route,
-    // //     name: 'updateUsername',
-    // //     builder: (BuildContext context, GoRouterState state) {
-    // //       return const UpdateUsernameScreen();
-    // //     },
-    // //   ),
-    // //   GoRoute(
-    // //     path: AppNames.editEmailScreen.route,
-    // //     name: 'editEmail',
-    // //     builder: (BuildContext context, GoRouterState state) {
-    // //       return const EditEmailScreen();
-    // //     },
-    // //   ),
-    // //   GoRoute(
-    // //     path: AppNames.editPhoneScreen.route,
-    // //     name: 'editPhone',
-    // //     builder: (BuildContext context, GoRouterState state) {
-    // //       return const EditPhoneScreen();
-    // //     },
-    // //   ),
-
-    // //   // Other Routes
-    // GoRoute(
-    //   path: AppNames.paymentScreen.route,
-    //   name: 'payment',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const PaymentScreen();
-    //   },
-    // ),
-    //   GoRoute(
-    //     path: AppNames.contactsupportScreen.route,
-    //     name: 'contactSupport',
-    //     builder: (BuildContext context, GoRouterState state) {
-    //       return const ContactSupportScreen();
-    //     },
-    //   ),
+    GoRoute(
+      path: AppNames.jobsHistoryScreen.route,
+      name: 'JobsHistoryScreen',
+      builder: (BuildContext context, GoRouterState state) {
+        return const JobsHistoryScreen();
+      },
+    ),
+    GoRoute(
+      path: AppNames.queuescreenAccept.route,
+      name: 'Queacceptscreen',
+      builder: (BuildContext context, GoRouterState state) {
+        final job = state.extra as JobRequestModel;
+        return GotoQueScreen(jobRequestModel: job);
+      },
+    ),
+    GoRoute(
+      path: AppNames.queListScreen.route,
+      name: 'queListscreen',
+      builder: (BuildContext context, GoRouterState state) {
+        return const QueueListScreen();
+      },
+    ),
   ],
 
   // Error page
@@ -216,7 +86,7 @@ final GoRouter router = GoRouter(
             Text('Page not found: ${state.uri}'),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => context.go(AppNames.splashScreen.route),
+              onPressed: () => context.go(AppNames.homeScreen.route),
               child: const Text('Go to Home'),
             ),
           ],

@@ -1,21 +1,20 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:priority_assist/controllers/history_jobs/job_history_controller.dart';
+
 import 'package:priority_assist/controllers/home/home_controller.dart';
-import 'package:priority_assist/controllers/progress_job/progress_job_controller.dart';
+
+import 'package:priority_assist/controllers/queue_jobs/queue_job_controller.dart';
 import 'package:priority_assist/models/job_request_model.dart';
 
-class JobAcceptScreen extends ConsumerWidget {
+class GotoQueScreen extends ConsumerWidget {
   final JobRequestModel jobRequestModel;
-  const JobAcceptScreen({super.key, required this.jobRequestModel});
+  const GotoQueScreen({super.key, required this.jobRequestModel});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    CountDownController controller = CountDownController();
     final homeState = ref.read(homeProvider.notifier);
-    final historyState = ref.read(historyJobProvider.notifier);
+    
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -24,46 +23,7 @@ class JobAcceptScreen extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(
             children: [
-              // Timer
-              Center(
-                child: CircularCountDownTimer(
-                  duration: 46,
-                  initialDuration: 0,
-                  controller: controller,
-                  width: 150,
-                  height: 150,
-                  ringColor: Colors.grey.shade300,
-                  ringGradient: null,
-                  fillColor: Colors.blueAccent,
-                  fillGradient: null,
-                  backgroundColor: Colors.white,
-                  backgroundGradient: null,
-                  strokeWidth: 10.0,
-                  strokeCap: StrokeCap.round,
-                  textStyle: const TextStyle(
-                    fontSize: 40,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                  textFormat: CountdownTextFormat.S,
-                  isReverse: true,
-                  isReverseAnimation: false,
-                  isTimerTextShown: true,
-                  autoStart: true,
-                  onComplete: () async {
-                    await historyState.saveToHive(
-                      name: jobRequestModel.name,
-                      address: jobRequestModel.address,
-                      serviceType: jobRequestModel.jobType,
-                      priority: jobRequestModel.priority,
-                      complete: 'no',
-                    );
-                    context.pop();
-                  },
-                ),
-              ),
-              const SizedBox(height: 30),
+             
 
               // Big Container with details
               Expanded(
@@ -143,15 +103,8 @@ class JobAcceptScreen extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await historyState.saveToHive(
-                          name: jobRequestModel.name,
-                          address: jobRequestModel.address,
-                          serviceType: jobRequestModel.jobType,
-                          priority: jobRequestModel.priority,
-                          complete: 'no',
-                        );
-                        context.pop(); // Handle decline logic
+                      onPressed: () {
+                        context.pop();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
@@ -161,7 +114,7 @@ class JobAcceptScreen extends ConsumerWidget {
                         ),
                       ),
                       child: const Text(
-                        'Decline',
+                        'Cancel',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
@@ -171,12 +124,13 @@ class JobAcceptScreen extends ConsumerWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         ref
-                            .read(progressJobProvider.notifier)
+                            .read(queueJobProvider.notifier)
                             .saveToHive(
                               name: jobRequestModel.name,
                               address: jobRequestModel.address,
                               serviceType: jobRequestModel.jobType,
                               priority: jobRequestModel.priority,
+                              queue: 'yes',
                             );
                         homeState.checkDatabaseStatus();
                         context.pop(); 
@@ -189,7 +143,7 @@ class JobAcceptScreen extends ConsumerWidget {
                         ),
                       ),
                       child: const Text(
-                        'Accept',
+                        'Queue',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),

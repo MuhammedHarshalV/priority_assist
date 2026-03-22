@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:priority_assist/controllers/request_employee/request_employee_controller.dart';
-
+import 'package:priority_assist/models/job_request_model.dart';
 import 'package:priority_assist/services/notification_service.dart';
 import 'package:priority_assist/themes/app_colors.dart';
 
@@ -67,7 +67,7 @@ class _AddJobScreenState extends ConsumerState<AddJobScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -122,7 +122,7 @@ class _AddJobScreenState extends ConsumerState<AddJobScreen> {
               DropdownButtonFormField<String>(
                 value: _selectedServiceType,
                 dropdownColor: Colors.grey,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.red, fontSize: 16),
                 decoration: InputDecoration(
                   labelText: 'Service Type',
                   border: OutlineInputBorder(
@@ -148,7 +148,7 @@ class _AddJobScreenState extends ConsumerState<AddJobScreen> {
                 value: _selectedPriority,
 
                 dropdownColor: Colors.grey,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.red, fontSize: 16),
 
                 decoration: InputDecoration(
                   labelText: 'Priority',
@@ -265,7 +265,14 @@ class _AddJobScreenState extends ConsumerState<AddJobScreen> {
 
                     // Schedule notification instead of immediate navigation
                     try {
+                      final jobRequest = JobRequestModel(
+                        name: _nameController.text,
+                        address: _addressController.text,
+                        priority: _selectedPriority!,
+                        jobType: _selectedServiceType!,
+                      );
                       await NotificationService.scheduleJobNotification(
+                        jobRequest: jobRequest,
                         id: DateTime.now().millisecond,
                         title: 'Incoming Job: $_selectedServiceType',
                         body:

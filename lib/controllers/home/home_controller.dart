@@ -6,7 +6,6 @@ import 'package:hive/hive.dart';
 import 'package:priority_assist/controllers/home/home_state.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> {
-  
   HomeNotifier() : super(const HomeState()) {
     _init();
   }
@@ -15,15 +14,16 @@ class HomeNotifier extends StateNotifier<HomeState> {
     await checkDatabaseStatus();
   }
 
-  // ─── Open Box ───────────────────────────────────────────────
+  //  Open Box 
   Future<Box> _openBox() async {
-    if (Hive.isBoxOpen('request_employee')) {
-      return Hive.box('request_employee');
+    if (Hive.isBoxOpen('progress_job')) {
+      return Hive.box('progress_job');
+      // Hive.openBox('request_employee');
     }
-    return await Hive.openBox('request_employee');
+    return await Hive.openBox('progress_job');
   }
 
-  // ─── Read All ────────────────────────────────────────────────
+  //  Read All ─
   Future<void> checkDatabaseStatus() async {
     try {
       state = state.copyWith(isLoading: true);
@@ -35,13 +35,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
         return map.map((key, value) => MapEntry(key.toString(), value));
       }).toList();
 
-      log('All stored data: $jobList');
+      log('All Progress data: $jobList');
       log(jobList.isNotEmpty.toString());
 
       state = state.copyWith(
         isDatabaseEmpty: jobList.isEmpty,
         isLoading: false,
-        jobRequests: jobList,
+        progressJob: jobList,
       );
     } catch (e) {
       log('checkDatabaseStatus error: $e');
@@ -49,7 +49,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }
   }
 
-  // ─── Add ─────────────────────────────────────────────────────
+  Future<void> clearProgressJobsState() async {
+    state = state.copyWith(progressJob: [], isDatabaseEmpty: true);
+  }
+
+  //  Add 
   Future<void> addJobRequest(Map<String, dynamic> jobData) async {
     try {
       final box = await _openBox();
@@ -61,7 +65,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }
   }
 
-  // ─── Update ──────────────────────────────────────────────────
+  //  Update 
   Future<void> updateJobRequest(
     int index,
     Map<String, dynamic> updatedData,
@@ -76,7 +80,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }
   }
 
-  // ─── Delete ──────────────────────────────────────────────────
+  //  Delete 
   Future<void> deleteJobRequest(int index) async {
     try {
       final box = await _openBox();
@@ -88,7 +92,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }
   }
 
-  // ─── Refresh ─────────────────────────────────────────────────
+  //  Refresh ──
   void refresh() {
     checkDatabaseStatus();
   }

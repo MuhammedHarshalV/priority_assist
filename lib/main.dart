@@ -60,7 +60,7 @@ class MyApp extends ConsumerWidget {
               ),
             ),
           ),
-          routerConfig: router, // Use GoRouter configuration
+          routerConfig: router, 
         );
       },
     );
