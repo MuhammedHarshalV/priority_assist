@@ -6,7 +6,7 @@ import 'package:priority_assist/controllers/queue_jobs/queue_job_controller.dart
 
 import 'package:priority_assist/themes/app_colors.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
-import 'package:priority_assist/views/common_widgets/history_job_card.dart';
+import 'package:priority_assist/views/common_widgets/job_details_card.dart';
 
 class QueueListScreen extends ConsumerWidget {
   const QueueListScreen({super.key});
@@ -22,21 +22,15 @@ class QueueListScreen extends ConsumerWidget {
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: queuestate.isLoading
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(color: Colors.grey),
-                  ),
-                )
+              ? Center(child: CircularProgressIndicator(color: Colors.grey))
               : queuestate.queueJobs.isEmpty
-              ? const Expanded(
-                  child: Center(child: Text('No Jobs in History.')),
-                )
+              ? Center(child: Text('No Jobs in Queuing.'))
               : ListView.builder(
                   itemCount: job.length,
                   itemBuilder: (context, index) {
                     final reversedList = queuestate.queueJobs.reversed.toList();
                     final job = reversedList[index];
-                    return HistoryJobCard(
+                    return JobDetailsCard(
                       job: job,
                       index: index + 1,
                       isQueue: true,

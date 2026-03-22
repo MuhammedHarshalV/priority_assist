@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:priority_assist/themes/app_colors.dart';
 
-class HistoryJobCard extends StatelessWidget {
+class JobDetailsCard extends StatelessWidget {
   final Map<String, dynamic> job;
   final int index;
   final bool? isQueue;
 
-  const HistoryJobCard({
+  const JobDetailsCard({
     super.key,
     required this.job,
     required this.index,

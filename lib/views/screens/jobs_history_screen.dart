@@ -5,7 +5,7 @@ import 'package:priority_assist/controllers/history_jobs/job_history_controller.
 
 import 'package:priority_assist/themes/app_colors.dart';
 import 'package:priority_assist/utils/routes/app_names.dart';
-import 'package:priority_assist/views/common_widgets/history_job_card.dart';
+import 'package:priority_assist/views/common_widgets/job_details_card.dart';
 
 class JobsHistoryScreen extends ConsumerWidget {
   const JobsHistoryScreen({super.key});
@@ -21,22 +21,16 @@ class JobsHistoryScreen extends ConsumerWidget {
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: historystate.isLoading
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(color: Colors.grey),
-                  ),
-                )
+              ? Center(child: CircularProgressIndicator(color: Colors.grey))
               : historystate.historyJob.isEmpty
-              ? const Expanded(
-                  child: Center(child: Text('No Jobs in History.')),
-                )
+              ? Center(child: Text('No Jobs in History.'))
               : ListView.builder(
                   itemCount: job.length < 16 ? job.length : 15,
                   itemBuilder: (context, index) {
                     final reversedList = historystate.historyJob.reversed
                         .toList();
                     final job = reversedList[index];
-                    return HistoryJobCard(job: job, index: index + 1);
+                    return JobDetailsCard(job: job, index: index + 1);
                   },
                 ),
         ),
